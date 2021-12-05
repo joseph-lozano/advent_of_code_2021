@@ -1,6 +1,5 @@
 defmodule AOC.Solutions do
   defmodule Day01 do
-    IO.inspect(__MODULE__)
     def part_1(:test), do: 7
     def part_1(:real), do: 1266
     def part_2(:test), do: 5
@@ -26,5 +25,12 @@ defmodule AOC.Solutions do
     def part_1(:real), do: 49686
     def part_2(:test), do: 1924
     def part_2(:real), do: 26878
+  end
+
+  defmodule Day05 do
+    def part_1(:test), do: 5
+    def part_1(:real), do: 6666
+    def part_2(:test), do: 12
+    def part_2(:real), do: 19081
   end
 end
