@@ -37,5 +37,7 @@ defmodule AOC.Solutions do
   defmodule Day06 do
     def part_1(:test), do: 5934
     def part_1(:real), do: 390_923
+    def part_2(:test), do: 26_984_457_539
+    def part_2(:real), do: 1_749_945_484_935
   end
 end

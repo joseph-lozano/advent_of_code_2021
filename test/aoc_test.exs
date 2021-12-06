@@ -2,11 +2,10 @@ defmodule AOCTest do
   use ExUnit.Case
 
   @current_day 6
-  @current_part 1
+  @current_part 2
   @current_env :real
 
   for day <- 1..@current_day do
-    @tag day: day
     day_str = day |> to_string() |> String.pad_leading(2, "0")
 
     describe "day #{day_str}" do
@@ -22,6 +21,7 @@ defmodule AOCTest do
 
         for env <- envs do
           @tag "#{day_str}": true
+          @tag timeout: :infinity
           test "part #{part} #{env}" do
             day = unquote(day_str)
             part = unquote(part)
