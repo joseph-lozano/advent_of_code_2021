@@ -1,8 +1,8 @@
 defmodule AOCTest do
   use ExUnit.Case
 
-  @current_day 5
-  @current_part 2
+  @current_day 6
+  @current_part 1
   @current_env :real
 
   for day <- 1..@current_day do
