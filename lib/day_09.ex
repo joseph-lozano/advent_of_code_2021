@@ -71,17 +71,31 @@ defmodule AOC.Day09 do
       end)
       |> Enum.into(%{})
 
-    Enum.reduce(cells, %{}, fn {_pos, cell}, acc ->
-      # acc is a map of cell => [cell] where the key is the basin low point, and the value is a list of cells leading to it
+    Enum.reduce(
+      cells,
+      %{basins: %{}, seen: %{}},
+      fn {_pos, cell}, %{basins: _basins, seen: seen} = acc ->
+        # acc is a map of cell => [cell] where the key is the basin low point, and the value is a list of cells leading to it
 
-      if cell in List.flatten(Map.values(acc)) or cell.value == 9 do
-        acc
-      else
-        {basin, followed_cells} = follow(cell, cells)
+        if Map.get(seen, cell.position) || cell.value == 9 do
+          acc
+        else
+          {basin, followed_cells} = follow(cell, cells)
 
-        update_in(acc, [Access.key(basin, [])], &((&1 ++ followed_cells) |> Enum.uniq()))
+          acc =
+            update_in(
+              acc,
+              [:basins, Access.key(basin, [])],
+              &((&1 ++ followed_cells) |> Enum.uniq())
+            )
+
+          Enum.reduce([cell | [basin | followed_cells]], acc, fn cell, acc ->
+            put_in(acc, [:seen, Access.key(cell.position)], true)
+          end)
+        end
       end
-    end)
+    )
+    |> Map.get(:basins)
     |> Enum.map(fn {_basin, followed} ->
       # plus one to include the basin
       Enum.count(followed) + 1
