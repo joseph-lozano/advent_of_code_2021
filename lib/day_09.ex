@@ -59,17 +59,19 @@ defmodule AOC.Day09 do
         |> Enum.map(fn {el, y} ->
           value = to_integer(el)
 
-          %Cell{
-            value: value,
-            position: {x, y},
-            neighbors:
-              [{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}]
-              |> Enum.reject(fn {nx, ny} -> nx < 0 or ny < 0 end)
-          }
+          {{x, y},
+           %Cell{
+             value: value,
+             position: {x, y},
+             neighbors:
+               [{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}]
+               |> Enum.reject(fn {nx, ny} -> nx < 0 or ny < 0 end)
+           }}
         end)
       end)
+      |> Enum.into(%{})
 
-    Enum.reduce(cells, %{}, fn cell, acc ->
+    Enum.reduce(cells, %{}, fn {_pos, cell}, acc ->
       # acc is a map of cell => [cell] where the key is the basin low point, and the value is a list of cells leading to it
 
       if cell in List.flatten(Map.values(acc)) or cell.value == 9 do
@@ -92,7 +94,7 @@ defmodule AOC.Day09 do
   defp follow(cell, all_cells, followed_cells \\ []) do
     min =
       cell.neighbors
-      |> Enum.map(fn neighbor -> Enum.find(all_cells, &(&1.position == neighbor)) end)
+      |> Enum.map(&Map.get(all_cells, &1))
       |> Enum.min_by(fn
         nil -> nil
         cell -> cell.value
