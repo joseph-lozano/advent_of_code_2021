@@ -1,7 +1,7 @@
 defmodule AOCTest do
   use ExUnit.Case
 
-  @current_day 8
+  @current_day 9
   @current_part 2
   @current_env :real
 
@@ -13,14 +13,15 @@ defmodule AOCTest do
 
       for part <- 1..max_part do
         envs =
-          if day == @current_day and part == max_part and @current_env == :test do
-            [:test]
+          if day == @current_day and part == max_part and @current_env == :practice do
+            [:practice]
           else
-            [:test, :real]
+            [:practice, :real]
           end
 
         for env <- envs do
           @tag "#{day_str}": true
+          @tag "#{env}": true
           @tag timeout: :infinity
           test "part #{part} #{env}" do
             day = unquote(day_str)
@@ -33,7 +34,7 @@ defmodule AOCTest do
 
             file =
               case env do
-                :test -> "inputs/day_#{day}.test.txt"
+                :practice -> "inputs/day_#{day}.test.txt"
                 :real -> "inputs/day_#{day}.txt"
               end
 
