@@ -61,4 +61,11 @@ defmodule AOC.Solutions do
     def part_2(:practice), do: 1134
     def part_2(:real), do: 916_688
   end
+
+  defmodule Day10 do
+    def part_1(:practice), do: 26397
+    def part_1(:real), do: 392_043
+    def part_2(:practice), do: :TODO
+    def part_2(:real), do: :TODO
+  end
 end
