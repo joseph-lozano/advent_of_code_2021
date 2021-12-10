@@ -5,12 +5,7 @@ defmodule AOC.Day10 do
     ?} => 1197,
     ?> => 25137
   }
-  @scores_2 %{
-    ?) => 1,
-    ?] => 2,
-    ?} => 3,
-    ?> => 4
-  }
+
   @invalid_chars Map.keys(@scores)
   def part_1(input) do
     input
@@ -67,8 +62,13 @@ defmodule AOC.Day10 do
 
       stack ->
         Enum.reduce(stack, 0, fn char, score ->
-          corresponding = if char == ?(, do: char + 1, else: char + 2
-          score * 5 + Map.fetch!(@scores_2, corresponding)
+          score * 5 +
+            case char do
+              ?( -> 1
+              ?[ -> 2
+              ?{ -> 3
+              ?< -> 4
+            end
         end)
     end
   end
